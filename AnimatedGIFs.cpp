@@ -99,7 +99,7 @@ const uint8_t chipSelect = WKP;
 RGBmatrixPanel matrix(A, B, C, D,CLK, LAT, OE, true, 32);	// 32x32
 /*******************************************/
 
-#define DISPLAY_TIME_SECONDS 10
+#define DISPLAY_TIME_SECONDS 5
 
 #define GIF_DIRECTORY "/gifs/"
 
@@ -143,17 +143,19 @@ void setup() {
     matrix.begin();
 
     // Clear screen
-    matrix.fillScreen(Blue);
+    matrix.fillScreen(Black);
     matrix.swapBuffers(false);
 	
 	matrix.setTextWrap(false); // Allow text to run off right edge
-	scrollText("Ready to go!");
+//	scrollText("Ready to go!");
 
     // initialize the SD card at full speed
     if (!sd.begin(chipSelect, SPI_FULL_SPEED)) {
         //Serial.println("No SD card");
-        scrollText("No SD card");
-        while(1) ;//scrollText("No SD card");
+        while(1) {	//scrollText("No SD card");
+			scrollText("No SD card");
+			delay(1000);
+		}
     }
 
     // Determine how many animated GIF files exist
@@ -161,15 +163,21 @@ void setup() {
 
     if(num_files < 0) {
         //Serial.println("No gifs directory");
-        scrollText("No gifs directory");
-        while(1);
+        while(1) {
+			scrollText("No gifs directory");
+			delay(1000);
+		}
     }
 
     if(!num_files) {
         //Serial.println("Empty gifs directory");
-        scrollText("Empty gifs directory");
-        while(1);
+        
+        while(1) {
+			scrollText("Empty gifs directory");
+			delay(1000);
+		}
     }
+	
 }
 
 
@@ -182,7 +190,17 @@ void loop() {
 
     // Do forever
     while (true) {
-        // Can clear screen for new animation here, but this might cause flicker with short animations
+		matrix.fillScreen(Red);
+		matrix.swapBuffers(false);
+		delay(1000);
+		matrix.fillScreen(Green);
+		matrix.swapBuffers(false);
+		delay(1000);
+		matrix.fillScreen(Blue);
+		matrix.swapBuffers(false);
+		delay(1000);
+
+	// Can clear screen for new animation here, but this might cause flicker with short animations
         // matrix.fillScreen(Black);
         // matrix.swapBuffers(false);
 
@@ -199,3 +217,4 @@ void loop() {
         }
     }
 }
+
