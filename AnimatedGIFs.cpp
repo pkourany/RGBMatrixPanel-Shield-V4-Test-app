@@ -110,7 +110,7 @@ void screenClearCallback(void) {
 }
 
 void updateScreenCallback(void) {
-  matrix.swapBuffers(false);
+  matrix.swapBuffers(true);
 }
 
 void drawPixelCallback(int16_t x, int16_t y, uint8_t red, uint8_t green, uint8_t blue) {
